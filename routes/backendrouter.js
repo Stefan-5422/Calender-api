@@ -4,11 +4,11 @@ const router = express.Router()
 const assets = require("../src/entry/entryController")
 const user = require("../src/user/userController")
 
-router.use("/entries",assets)
-router.use("/users",user)
+router.use("/entries", assets)
+router.use("/users", user)
 
-router.get("/", async (req,res) => {
+router.get("/", async (req, res) => {
     res.send("This works?")
-}) 
+})
 
 module.exports = router;

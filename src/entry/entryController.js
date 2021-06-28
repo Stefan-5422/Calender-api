@@ -6,27 +6,26 @@ const model = require("./entryModel")
 const auth = require("../util/auth")
 
 router.get("/", async (req, res) => {
-    if(!auth.verify(req.headers.authorization[1])){ 
-        res.status(403) .json("")
+    if (!auth.verify(req.headers.authorization[1])) {
+        res.status(403).json("")
         return
     }
-    const user = await users.getbyId( auth.decrypt(req.headers.authorization[1]).id).then(a=>a[0])
-    console.log(user.entries)
+    const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
     res.json(await model.getbyIds(user.entries))
 })
 
-router.post("/add", async (req,res) => {
-    if(!auth.verify(req.headers.authorization[1])){ 
-        res.status(403) .json("")
+router.post("/add", async (req, res) => {
+    if (!auth.verify(req.headers.authorization[1])) {
+        res.status(403).json("")
         return
     }
-    const user = await users.getbyId( auth.decrypt(req.headers.authorization[1]).id).then(a=>a[0])
+    const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
 
     let entry
 
     try {
         entry = new Entrie(req.body)
-    } catch(err) {
+    } catch (err) {
         res.status(400).json("")
         return
     }
