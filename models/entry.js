@@ -2,21 +2,20 @@ const mongoose = require("mongoose")
 
 class Entry {
     constructor(json) {
-        if((json.name == null || undefined) || 
-           (json.description == null || undefined) ||
-           (json.date == null || undefined)) throw "no";
+        if ((json.name == null || undefined) ||
+            (json.date == null || undefined)) throw "no";
         this.name = json.name
-        this.description = json.description
+        this.description = json.description ?? undefined
         this.date = json.date
     }
     serialize() {
         return {
-            name:        this.name,
+            name: this.name,
             description: this.description,
-            date:        this.date,
+            date: this.date,
         }
     }
-} 
+}
 
 const schema = new mongoose.Schema({
     name: String,
@@ -25,4 +24,4 @@ const schema = new mongoose.Schema({
 })
 
 module.exports = Entry
-module.exports.Schema = schema 
+module.exports.Schema = schema

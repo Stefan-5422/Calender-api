@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     res.json(await model.getbyIds(user.entries))
 })
 
-router.post("/add", async (req, res) => {
+router.post("/", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
         res.status(403).json("")
         return
@@ -32,7 +32,7 @@ router.post("/add", async (req, res) => {
     const id = await model.insert(entry)
     user.entries.push(id)
     users.update(user)
-    res.status(200).json("")
+    res.status(201).json("")
 })
 
 module.exports = router;

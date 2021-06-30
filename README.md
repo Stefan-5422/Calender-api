@@ -20,7 +20,7 @@
 	200: Succes
 	403: No valid session
 ---
-# POST /api/entries/add/
+# POST /api/entries/
 ## Description
 	Adds a new entry to the current user
 ## Returns

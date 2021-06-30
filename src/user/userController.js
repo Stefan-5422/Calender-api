@@ -62,7 +62,7 @@ router.put("/", async (req, res) => {
     }
     const newuser = {
         username: req.body.username ?? user.username,
-        password: req.body.password ?? user.password,
+        password: cryptojs.SHA256(req.body.password) ?? user.password,
         settings: req.body.settings ?? user.settings,
         _id: user._id,
     }
