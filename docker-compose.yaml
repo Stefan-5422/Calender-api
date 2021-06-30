@@ -1,0 +1,12 @@
+version: "3"
+services:
+  api:
+    image: ghcr.io/stefan-5422/calender-api/calender-api:latest
+    ports:
+      - 8080:8080
+    environment:
+      - MONGO_HOST=mongodb
+      - SECRET=definitlynotthesecretyoushouldbeusingasitisintheoublicfilefoweveryonetosee...
+
+  mongodb:
+    image: mongo

@@ -6,7 +6,7 @@ const cors = require("cors")
 require('dotenv').config()
 
 const PORT = 8080;
-const MONGOURI = "mongodb://localhost:8081/calender"
+const MONGOURI = process.env.MONGO_HOST
 
 mongoose.connect(MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
