@@ -10,8 +10,9 @@
 ## Returns
 	A json object with the entries of the current user
 	name: The name of the entry
-	description: (optional) The description of the entire
-	date: The date of the entry (string from Data.parse())
+	description: (optional) The description of the entry
+	date: The date and time the event begins
+	duration: The duration in minutes
 	id: a unique identifier
 ## Auth
 	Valid Bearer token
@@ -28,7 +29,8 @@
 ## Parameters
 	name: The name of the entry
 	description: (optional) The description of the entire
-	date: The date of the entry
+	date: The date and time the event begins
+	duration: The duration in minutes
 ## Auth
 	Valid Bearer token
 ## Codes
@@ -46,7 +48,9 @@
 	At least one of these parameteres need to be included:
 		name: The name of the entry
 		description: (optional) The description of the entire
-		date: The date of the entry
+		date: The date and time the event begins
+		duration: The duration in minutes
+
 ## Auth
 	Valid Bearer token and the user needs to be part of the event
 ## Codes

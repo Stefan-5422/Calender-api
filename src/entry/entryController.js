@@ -4,6 +4,7 @@ const Entrie = require("../../models/entry")
 const users = require("../user/userModel")
 const model = require("./entryModel")
 const auth = require("../util/auth")
+const format = require("../util/format")
 
 router.get("/", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
@@ -11,7 +12,13 @@ router.get("/", async (req, res) => {
         return
     }
     const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
-    res.json(await model.getbyIds(user.entries))
+    var a = await model.getbyIds(user.entries)
+    a = Array.from(a)
+    a = a.map(element => {
+        element = format.formatEntry(element)
+        return element
+    })
+    res.json(a)
 })
 
 router.post("/", async (req, res) => {
