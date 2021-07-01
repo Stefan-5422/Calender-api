@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 
 router.get("/settings", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
-        res.status(403).json("")
+        res.status(403).json("Invalid session")
         return
     }
     const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
@@ -22,8 +22,8 @@ router.post("/register", async (req, res) => {
         await model.insert(user)
     } catch (err) {
         (user == undefined) ?
-            res.status(400).send("") :
-            res.status(409).send("")
+            res.status(400).send("Required POST data missing") :
+            res.status(409).send("Username already taken")
         return;
     }
     res.status(201).send("")
@@ -33,8 +33,7 @@ router.post("/auth", async (req, res) => {
     try {
         const user = new User(req.body)
     } catch (err) {
-        console.log(err)
-        res.status(400).send("")
+        res.status(400).send("Required POST data missing")
         return
     }
     const re = await model.authenthicate(req.body.username, cryptojs.SHA256(req.body.password).toString())
@@ -44,7 +43,7 @@ router.post("/auth", async (req, res) => {
         res.status(200).json({ auth: { access_token: jwt.sign(val, process.env.SECRET, { expiresIn: '1d' }) } })
         return
     } else {
-        res.status(401).json("")
+        res.status(401).json("Username or password wrong")
         return
     }
 
@@ -52,13 +51,13 @@ router.post("/auth", async (req, res) => {
 
 router.put("/", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
-        res.status(403).json("")
+        res.status(403).json("Invalid session")
         return
     }
     const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
 
     if (!req.body) {
-        res.status(400).json("")
+        res.status(400).json("Required POST data missing")
     }
     const newuser = {
         username: req.body.username ?? user.username,

@@ -2,9 +2,12 @@ const mongoose = require("mongoose")
 
 class Entry {
     constructor(json) {
+        if (json == null || undefined) throw "Required POST data missing"
         if ((json.name == null || undefined) ||
             (json.date == null || undefined) ||
-            (json.duration == null || undefined)) throw "no";
+            (json.duration == null || undefined)) throw "Required POST data missing"
+        if (typeof json.date != "number") throw "Date is not a number"
+
         this.name = json.name
         this.description = json.description ?? undefined
         this.date = json.date

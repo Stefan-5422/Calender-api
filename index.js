@@ -15,8 +15,8 @@ const backendrouter = require("./routes/backendrouter")
 app.use(cors())
 
 //Use middleware for POST requests
-app.use(urlencoded({ extended: true }))
-app.use(json())
+app.use(urlencoded({ extended: true, limit: "1kb" }))
+app.use(json({ limit: "1kb" }))
 
 //Auth middleware
 app.use((req, res) => {

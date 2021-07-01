@@ -8,7 +8,7 @@ const format = require("../util/format")
 
 router.get("/", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
-        res.status(403).json("")
+        res.status(403).json("Invalid session")
         return
     }
     const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     if (!auth.verify(req.headers.authorization[1])) {
-        res.status(403).json("")
+        res.status(403).json("Invalid session")
         return
     }
     const user = await users.getbyId(auth.decrypt(req.headers.authorization[1]).id).then(a => a[0])
@@ -33,13 +33,13 @@ router.post("/", async (req, res) => {
     try {
         entry = new Entrie(req.body)
     } catch (err) {
-        res.status(400).json("")
+        res.status(400).json(err)
         return
     }
     const id = await model.insert(entry)
     user.entries.push(id)
     users.update(user)
-    res.status(201).json("")
+    res.status(201).json()
 })
 
 module.exports = router;
